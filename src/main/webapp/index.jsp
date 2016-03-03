@@ -16,42 +16,42 @@
 	<table>
 		<tr>
 			<td><a
-				href="${pageContext.request.contextPath}/registration/webapp/getStudents">Get
+				href="${pageContext.request.contextPath}/registration/v1/webapp/getStudents">Get
 					all students</a></td>
 		</tr>
 		<tr>
 			<td>
-				<form method="get" action="${pageContext.request.contextPath}/registration/webapp/getStudent">
+				<form method="get" action="${pageContext.request.contextPath}/registration/v1/webapp/getStudent">
 					<input type="text" name="id" /> <input type="submit" value="Get Student With Id"/>
 				</form>
 			</td>
 		</tr>
 		<tr>
 			<td><a
-				href="${pageContext.request.contextPath}/registration/webapp/admin/addStudent">Add
+				href="${pageContext.request.contextPath}/registration/v1/webapp/admin/addStudent">Add
 					a student</a></td>
 		</tr>
 		<tr>
 			<td><a
-				href="${pageContext.request.contextPath}/registration/webapp/getAllClasses">Get All Classes</a></td>
+				href="${pageContext.request.contextPath}/registration/v1/webapp/getAllClasses">Get All Classes</a></td>
 		</tr>
 		<tr>
 			<td><a
-				href="${pageContext.request.contextPath}/registration/webapp/admin/addClass">Add Class</a></td>
+				href="${pageContext.request.contextPath}/registration/v1/webapp/admin/addClass">Add Class</a></td>
 		</tr>
 		<tr>
 			<td><a
-				href="${pageContext.request.contextPath}/registration/webapp/admin/registerStudentForClass">
+				href="${pageContext.request.contextPath}/registration/v1/webapp/admin/registerStudentForClass">
 				Register Student For Class</a></td>
 		</tr>
 		<tr>
 			<td><a
-				href="${pageContext.request.contextPath}/registration/webapp/masterDetailRest">
+				href="${pageContext.request.contextPath}/registration/v1/webapp/masterDetailRest">
 				Student Master/Detail Restfully</a></td>
 		</tr>
 		<tr>
 			<td><a
-				href="${pageContext.request.contextPath}/registration/webapp/admin/addStudentRest">
+				href="${pageContext.request.contextPath}/registration/v1/webapp/admin/addStudentRest">
 				Add Student's Restfully</a></td>
 		</tr>
 </body>

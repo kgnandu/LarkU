@@ -7,19 +7,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
 
@@ -36,7 +30,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
-@Path("/")
+@Path("/students")
 public class StudentRestyController {
 
 	
@@ -68,7 +62,7 @@ public class StudentRestyController {
 	 * @throws JsonGenerationException 
 	 */
 	@GET
-	@Path("/students/{id}")
+	@Path("/{id}")
 	@Produces({ "application/xml", "application/json" ,"application/x-java-serialized-object"})
 	public Student getStudentXJWithPathVariable(@PathParam("id") int id) throws JsonGenerationException, JsonMappingException, IOException {
 		if(id == -1) {
@@ -100,7 +94,7 @@ public class StudentRestyController {
 	 * @return
 	 */
 	@GET
-	@Path("/students/{id}/link")
+	@Path("/{id}/link")
 	@Produces({ "application/xml", "application/json" ,"application/x-java-serialized-object"})
 	public StudentLinks getStudentXJWithCourseLink(@PathParam("id") int id) {
 		if(id == -1) {
@@ -133,7 +127,7 @@ public class StudentRestyController {
 	 * @return
 	 */
 	@GET
-	@Path("/students/{id}/atomlink")
+	@Path("/{id}/atomlink")
 	@Produces({ "application/xml", "application/json" ,"application/x-java-serialized-object"})
 	public StudentLinks getStudentXJWithCourseAtomLink(@PathParam("id") int id) {
 		if(id == -1) {
@@ -174,48 +168,9 @@ public class StudentRestyController {
 		return student;
 	}
 
-	/**
-	 * Create a Student and return the newly created 
-	 * Student (with new Id).  
-	 * 
-	 * @param student
-	 * @return
-	 */
-	//@POST
-	//@Path("/admin/students")
-	@Consumes({ "application/xml", "application/json" })
-	@Produces({ "application/xml", "application/json" })
-	public Student addStudent(Student student) {
-		Student student2 = regService.getStudentService()
-				.createStudent(student);
-		return student2;
-	}
-
-	/**
-	 * Create a Student and return the newly created 
-	 * Student (with new Id).  
-	 * 
-	 * Add a Location header to the response using UriInfo
-	 * @param student
-	 * @return
-	 */
-	@POST
-	@Path("/admin/students")
-	@Consumes({ "application/xml", "application/json", "application/x-java-serialized-object" })
-	@Produces({ "application/xml", "application/json" , "application/x-java-serialized-object"})
-	public Response addStudentWithLocation(Student student) {
-		Student student2 = regService.getStudentService()
-				.createStudent(student);
-		
-        UriBuilder ub = uriInfo.getRequestUriBuilder().path(student2.getId() + "");
-        URI uri = ub.build();
-		
-		return Response.created(uri).entity(student2).build();
-	}
-
 
 	@GET
-	@Path("/students")
+	@Path("")
 	@Produces({ "application/xml", "application/json", "application/x-java-serialized-object"})
 	public List<Student> getStudentsXmlJson() {
 		List<Student> students = regService.getStudentService()
@@ -224,7 +179,7 @@ public class StudentRestyController {
 	}
 
 	@GET
-	@Path("/students/heldstudents")
+	@Path("/heldstudents")
 	@Produces({ "application/xml", "application/json" })
 	public StudentListHolder getStudentsXmlJsonHolder() {
 		List<Student> students = regService.getStudentService()
@@ -233,7 +188,7 @@ public class StudentRestyController {
 	}
 
 	@GET
-	@Path("/students/links")
+	@Path("/links")
 	@Produces({ "application/xml", "application/json"})
 	public List<Link> getStudentsXmlJsonLinks() {
 		List<String> matched = uriInfo.getMatchedURIs();
@@ -249,23 +204,6 @@ public class StudentRestyController {
 		return uris;
 	}
 	
-	@DELETE
-	@Path("/admin/students/{id}")
-	public Response deleteStudent(@PathParam("id") int id) {
-		regService.getStudentService().deleteStudent(id);
-		
-		return Response.noContent().build();
-	}
-	
-	@PUT
-	@Path("/admin/students/{id}")
-	public Response updateStudent(Student student) {
-		regService.getStudentService().updateStudent(student);
-		
-		return Response.ok().build();
-
-	}
-
 
 	public RegistrationService getRegService() {
 		return regService;

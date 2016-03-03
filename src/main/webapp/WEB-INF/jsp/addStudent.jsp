@@ -14,7 +14,7 @@
 <body>
 	<jsp:include page="/WEB-INF/jsp/larkUHeader.jsp" />
 	<form
-		action="${pageContext.request.contextPath}/registration/webapp/admin/addStudent"
+		action="${pageContext.request.contextPath}/registration/v1/webapp/admin/addStudent"
 		method="post">
 		<table border="1" width="200">
 			<tr>

@@ -51,8 +51,8 @@
 			}
 
 			$.ajax({
-				//url : "http://localhost:8080/Solutions/jaxrs/jpa/addStudent",
-				url : "https://localhost:8443/LarkU/registration/admin/students",
+				url : "http://localhost:8080/LarkU/registration/v1/admin/students",
+				//url : "https://localhost:8443/LarkU/registration/admin/students",
 				type : "post",
 				dataType : "json",
 				data : student,
@@ -90,8 +90,8 @@
 
 	$(document).ready(function() {
 		//Fetch the set of current students and populate the list
-		//var href = "http://localhost:8080/7_LarkU_JSF_WS/restreg/students";
-		var href = "https://localhost:8443/LarkU/registration/students";
+		var href = "http://localhost:8080/LarkU/registration/v1/students";
+		//var href = "https://localhost:8443/LarkU/registration/students";
 		$.get(href, function(values) {
 			var students = values;
 			//var students = values.student;

@@ -14,7 +14,7 @@
 <body>
 	<jsp:include page="/WEB-INF/jsp/larkUHeader.jsp" />
 	<h2>Add a new Scheduled Class</h2>
-	<form action="${pageContext.request.contextPath}/registration/webapp/admin/addClass" method="post" >
+	<form action="${pageContext.request.contextPath}/registration/v1/webapp/admin/addClass" method="post" >
 		<table border="1" width="300">
 			<tr>
 				<td>Course Code</td>

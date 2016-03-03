@@ -16,6 +16,9 @@ import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.ext.MessageBodyWriter;
 import javax.ws.rs.ext.Provider;
 
+import org.apache.cxf.jaxrs.ext.MessageContext;
+import org.apache.cxf.transport.http.AbstractHTTPDestination;
+
 //import org.apache.cxf.jaxrs.ext.MessageContext;
 //import org.apache.cxf.transport.http.AbstractHTTPDestination;
 

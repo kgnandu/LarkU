@@ -176,6 +176,7 @@ public class WebAppController {
 				.getAllStudents();
 		request.setAttribute("students", students);
 		request.setAttribute("url", "/WEB-INF/jsp/studentMasterDetailJQuery.jsp");
+		//This will be handled by the JspForwardingConverter - is *very* cxf jaxrs specific
 		return "";
 	}
 

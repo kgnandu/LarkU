@@ -111,6 +111,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<!--
 		<resources>
 			<resource>
 				<directory>src/main/java/ttl/larku/converters</directory>
@@ -119,6 +120,7 @@
 				</excludes>
 			</resource>
 		</resources>
+		-->
 	</build>
 
 	<properties>

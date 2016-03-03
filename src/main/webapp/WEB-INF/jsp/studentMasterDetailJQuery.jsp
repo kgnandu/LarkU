@@ -84,7 +84,7 @@
 			<tr>
 				<td>${loopStatus.index}</td>
 				<td><a class="link"
-					href="/LarkU/registration/students/${student.id}">${student.id}</a></td>
+					href="/LarkU/registration/v1/students/${student.id}">${student.id}</a></td>
 				<td>${student.name}</td>
 			</tr>
 		</c:forEach>
