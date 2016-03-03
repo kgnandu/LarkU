@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	<!-- <import resource="larkuDBContext.xml" /> -->
+	
+	<context:component-scan base-package="ttl.larku" /> 
+
+	<bean id="inMemoryClassDAO" class="ttl.larku.dao.inmemory.InMemoryClassDAO" />
+	<bean id="inMemoryCourseDAO" class="ttl.larku.dao.inmemory.InMemoryCourseDAO" />
+	<bean id="inMemoryStudentDAO" class="ttl.larku.dao.inmemory.InMemoryStudentDAO" />
+
+	
+	<alias alias="classDAO" name="inMemoryClassDAO" />
+	<alias alias="courseDAO" name="inMemoryCourseDAO" />
+	
+	<alias alias="studentDAO" name="studentDAOWithInitData" />
+	<!--
+	<alias alias="studentDAO" name="inMemoryStudentDAO" /> 
+	<alias alias="classDAO" name="inMemoryClassDAO" />
+	<alias alias="courseDAO" name="inMemoryCourseDAO" />
+	
+	<alias alias="studentDAO" name="studentDAOWithInitData" />
+	
+	<alias alias="courseDAO" name="jdbcTemplateCourseDAO" />
+	<alias alias="studentDAO" name="jdbcTemplateStudentDAO" />
+	<alias alias="classDAO" name="jdbcTemplateClassDAO" />
+	
+	<alias alias="studentDAO" name="jpaStudentDAO" />
+	<alias alias="courseDAO" name="jpaCourseDAO" />
+	<alias alias="classDAO" name="jpaClassDAO" />
+	
+	-->
+	
+	
+
+	<bean id="studentDAOWithInitData" class="ttl.larku.dao.inmemory.InMemoryStudentDAO">
+		<property name="students">
+			<map>
+				<entry>
+					<key>
+						<value>101</value>
+					</key>
+					<bean class="ttl.larku.domain.Student">
+						<property name="id" value="101" />
+						<property name="name" value="anil" />
+						<property name="phoneNumber" value="222 222 2222" />
+					</bean>
+				</entry>
+				<entry>
+					<key>
+						<value>102</value>
+					</key>
+					<bean class="ttl.larku.domain.Student">
+						<property name="id" value="102" />
+						<property name="name" value="Ana" />
+						<property name="phoneNumber" value="222 555 6666" />
+					</bean>
+				</entry>
+				<entry>
+					<key>
+						<value>103</value>
+					</key>
+					<bean class="ttl.larku.domain.Student">
+						<property name="id" value="103" />
+						<property name="name" value="Roberta" />
+						<property name="phoneNumber" value="222 333 4444" />
+					</bean>
+				</entry>
+			</map>
+		</property>
+	</bean>
+	
+	<bean id="courseDAOWithInitData" class="ttl.larku.dao.inmemory.InMemoryCourseDAO">
+		<property name="courses">
+			<map>
+				<entry>
+					<key>
+						<value>101</value>
+					</key>
+					<bean class="ttl.larku.domain.Course">
+						<property name="id" value="101" />
+						<property name="title" value="Intro To Botany" />
+						<property name="code" value="BOT-101" />
+					</bean>
+				</entry>
+				<entry>
+					<key>
+						<value>102</value>
+					</key>
+					<bean class="ttl.larku.domain.Course">
+						<property name="id" value="102" />
+						<property name="title" value="Yet More Botany" />
+						<property name="code" value="BOT-201" />
+					</bean>
+				</entry>
+				<entry>
+					<key>
+						<value>103</value>
+					</key>
+					<bean class="ttl.larku.domain.Course">
+						<property name="id" value="103" />
+						<property name="title" value="Intro To Math" />
+						<property name="code" value="MATH-101" />
+					</bean>
+				</entry>
+			</map>
+		</property>
+	</bean>
+
+	<bean id="courseService" class="ttl.larku.service.CourseService">
+		<property name="courseDAO" ref="courseDAO" />
+	</bean>
+
+	<bean id="classService" class="ttl.larku.service.ClassService">
+		<property name="classDAO" ref="classDAO" />
+		<property name="courseService" ref="courseService" />
+	</bean>
+
+	<bean id="regService" class="ttl.larku.service.RegistrationService">
+		<property name="courseService" ref="courseService" />
+		<property name="studentService" ref="studentService" />
+		<property name="classService" ref="classService" />
+	</bean>
+
+</beans>

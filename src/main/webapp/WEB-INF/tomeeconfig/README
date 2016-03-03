@@ -1,0 +1,4 @@
+To create a keystore:
+	keytool -genkey -alias tomcat -keypass tomcatpassword -keystore .keystore -keyalg RSA	
+	
+Set first name and last name to "localhost".  Wierd, but apparently necessary.

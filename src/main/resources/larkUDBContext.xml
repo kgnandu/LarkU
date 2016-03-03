@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/tx
+		http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	<!-- <context:component-scan base-package="ttl.larku" /> -->
+
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+		<property name="url" value="jdbc:derby://localhost/LarkUDB" />
+		<property name="driverClass" value="org.apache.derby.jdbc.ClientDriver" />
+		<property name="username" value="larku" />
+		<property name="password" value="larku" />
+	</bean>
+
+
+	<bean id="dsTransactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<!-- JDBC Beans -->
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+<!--
+	<bean id="jdbcTemplateClassDAO" class="ttl.larku.dao.jdbctemplate.JDBCTemplateClassDAO">
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+		<property name="courseDAO" ref="jdbcTemplateCourseDAO" />
+	</bean>
+
+	<bean id="jdbcTemplateCourseDAO" class="ttl.larku.dao.jdbctemplate.JDBCTemplateCourseDAO">
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+	</bean>
+
+	<bean id="jdbcTemplateStudentDAO" class="ttl.larku.dao.jdbctemplate.JDBCTemplateStudentDAO">
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+	</bean>
+-->
+	<!-- END JDBC Beans -->
+
+	<!-- JPA Beans -->
+<!--
+	<bean id="jpaStudentDAO" class="ttl.larku.dao.jpahibernate.JPAStudentDAO" />
+	<bean id="jpaCourseDAO" class="ttl.larku.dao.jpahibernate.JPACourseDAO" />
+	<bean id="jpaClassDAO" class="ttl.larku.dao.jpahibernate.JPAClassDAO" />
+-->
+	<!-- End JPA Beans -->
+	
+	<!-- Hibernate Beans -->
+	<bean id="hibernateStudentDAO" class="ttl.larku.dao.hibernate.HibernateStudentDAO" />
+	<bean id="hibernateCourseDAO" class="ttl.larku.dao.hibernate.HibernateCourseDAO" />
+	<bean id="hibernateClassDAO" class="ttl.larku.dao.hibernate.HibernateClassDAO" />
+	<!-- END Hibernate Beans -->
+	
+	<bean id="LarkUPU_SE"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="persistenceUnitName" value="LarkUPU_SE" />
+		<property name="persistenceUnitManager">
+			<bean
+				class="org.springframework.orm.jpa.persistenceunit.DefaultPersistenceUnitManager">
+				<property name="defaultDataSource" ref="dataSource" />
+			</bean>
+		</property>
+	</bean>
+
+<!--
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate4.annotation.AnnotationSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="packagesToScan" value="ttl.larku.domain" />
+		<property name="hibernateProperties">
+			<props>
+				<prop key="dialect">org.hibernate.dialect.DerbyDialect</prop>
+			</props>
+		</property>
+	</bean>
+-->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="packagesToScan" value="ttl.larku.domain" />
+		<property name="hibernateProperties">
+			<props>
+				<prop key="dialect">org.hibernate.dialect.DerbyDialect</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="jpaTransactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="LarkUPU_SE" />
+	</bean>
+	
+	<bean id="hibernateTransactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<tx:annotation-driven transaction-manager="hibernateTransactionManager" />
+
+</beans>

@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<resources>
+    <!--
+    <Service id="jsonProvider" class-name="org.apache.cxf.jaxrs.provider.json.JSONProvider">
+        dropRootElement=true
+        supportUnwrapped=true
+        dropCollectionWrapperElement=false
+        serializeAsArray=true
+        arrayKeys=classes
+        writeNullAsString=false
+    </Service>
+    -->
+    <Service id="jsonProvider" class-name="com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider"/>
+</resources>
