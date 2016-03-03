@@ -12,8 +12,8 @@ public class RestExceptionMapper implements ExceptionMapper<LarkUException>{
 
 
     public Response toResponse(LarkUException e){
-    	System.out.println("Got LarkUException in RestExceptionMapper");
-    	e.printStackTrace();
+    	//System.out.println("Got LarkUException in RestExceptionMapper");
+    	//e.printStackTrace();
     	RestErrorObject reo = new RestErrorObject("Awful stuff happened", e.toString(),
         				RestErrorObject.ErrorType.HIS_ERROR);
         return Response.status(Response.Status.BAD_REQUEST).
