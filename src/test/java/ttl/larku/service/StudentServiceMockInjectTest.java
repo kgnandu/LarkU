@@ -23,7 +23,7 @@ import ttl.larku.dao.inmemory.InMemoryStudentDAO;
 import ttl.larku.domain.Student;
 
 @RunWith(MockitoJUnitRunner.class)
-public class StudentServiceMockInject {
+public class StudentServiceMockInjectTest {
 
 	@Spy
 	private InMemoryStudentDAO dao;

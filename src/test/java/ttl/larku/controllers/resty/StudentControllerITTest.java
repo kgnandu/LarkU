@@ -31,7 +31,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 
 @RunWith(Arquillian.class)
-public class SomeControllerIT {
+public class StudentControllerITTest {
 
 	@ArquillianResource
 	private URL serviceURL;
