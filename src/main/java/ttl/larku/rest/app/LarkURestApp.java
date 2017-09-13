@@ -3,7 +3,7 @@ package ttl.larku.rest.app;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
-@ApplicationPath("/registration/v1")
+@ApplicationPath("/registration")
 public class LarkURestApp extends Application {
 
 	/*

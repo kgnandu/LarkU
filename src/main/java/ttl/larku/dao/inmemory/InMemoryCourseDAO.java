@@ -13,7 +13,7 @@ import ttl.larku.cdi.qualifier.DBType;
 import ttl.larku.dao.BaseDAO;
 import ttl.larku.domain.Course;
 
-@DBQualifier(DBType.COURSE)
+//@DBQualifier(DBType.COURSE)
 @ApplicationScoped
 public class InMemoryCourseDAO implements BaseDAO<Course> {
 

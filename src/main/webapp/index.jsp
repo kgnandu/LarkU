@@ -15,8 +15,7 @@
 	<jsp:include page="/WEB-INF/jsp/larkUHeader.jsp" />
 	<table>
 		<tr>
-			<td><a
-				href="${pageContext.request.contextPath}/registration/v1/webapp/getStudents">Get
+			<td><a href="${pageContext.request.contextPath}/registration/v1/webapp/getStudents">Get
 					all students</a></td>
 		</tr>
 		<tr>

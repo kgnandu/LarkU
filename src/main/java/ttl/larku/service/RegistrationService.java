@@ -16,14 +16,15 @@ public class RegistrationService {
 	private StudentService studentService;
 	private ClassService classService;
 
-	@PostConstruct
+	//@PostConstruct
 	public void init() {
+		/*
 		if (studentService.getAllStudents().size() == 0) {
 			// init data
 
-			studentService.createStudent(new Student("Roberta", "383 892 9292"));
+			studentService.createStudent(new Student("Roberta", "383 892 9292", Student.Status.FULL_TIME));
 			studentService.createStudent(new Student("Madhu", "383 393 9292", Student.Status.HIBERNATING));
-			studentService.createStudent(new Student("Tim", "989 938 6748"));
+			studentService.createStudent(new Student("Tim", "989 938 6748", Student.Status.FULL_TIME));
 			studentService.createStudent(new Student("Amir", "776 636 8886", Student.Status.PART_TIME));
 
 			courseService.createCourse(new Course("MATH-101", "Baby Math"));
@@ -38,6 +39,7 @@ public class RegistrationService {
 			addNewClassToSchedule("PHY-302", "08/10/2015", "12/10/2016");
 			addNewClassToSchedule("BKT-201", "06/10/2015", "9/10/2015");
 		}
+			*/
 	}
 	
 	@Inject
@@ -69,7 +71,7 @@ public class RegistrationService {
 			if (sc.getStartDate().equals(startDate)) {
 				sc.addStudent(student);
 				student.addClass(sc);
-
+				studentService.updateStudent(student);
 				break;
 			}
 		}

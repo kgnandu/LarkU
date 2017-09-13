@@ -1,5 +1,13 @@
 package ttl.larku.domain;
 
+import java.io.Serializable;
+import java.util.Arrays;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -7,17 +15,19 @@ import javax.xml.bind.annotation.XmlTransient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Course {
+@Entity
+public class Course implements Serializable{
 	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	private String title;
 	private String code;
 	private float credits = 2.5f;
-	private String name;
 	
+	@Transient
 	@JsonIgnore
 	@XmlTransient
 	private float [] creditList = { 1, 1.5f, 2, 2.5f, 3, 3.5f, 4};
@@ -65,14 +75,6 @@ public class Course {
 		this.creditList = creditList;
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -102,6 +104,13 @@ public class Course {
 		} else if (!title.equals(other.title))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Course [id=" + id + ", title=" + title + ", code=" + code
+				+ ", credits=" + credits + ", creditList="
+				+ Arrays.toString(creditList) + "]";
 	}
 	
 	

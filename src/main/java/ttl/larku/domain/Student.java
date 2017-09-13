@@ -4,6 +4,15 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -15,7 +24,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-//@JsonIgnoreProperties({"statusList"})
+@Entity
 public class Student implements Serializable {
 	
 	public enum Status { 
@@ -24,14 +33,20 @@ public class Student implements Serializable {
 		HIBERNATING
 	};
 	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
+	
 	
 	private String name;
 	private String phoneNumber;
 	
+	@Enumerated(EnumType.STRING)
 	private Status status = Status.FULL_TIME;
-
+	
+	
 	//@JsonManagedReference
+	@ManyToMany(fetch=FetchType.EAGER)
 	@XmlElementWrapper(name="classes")
 	@XmlElement(name="class")
 	private List<ScheduledClass> classes;
@@ -43,23 +58,24 @@ public class Student implements Serializable {
 	}
 	
 	public Student(String name) {
-		this(name, null, Status.FULL_TIME);
-	}
-	
-	
-	public Student(String name, String phoneNumber) {
-		this(name, phoneNumber, Status.FULL_TIME);
-	}
-
-	public Student(String name, String phoneNumber, Status status) {
-		super();
+		this(name, new ArrayList<ScheduledClass>());
 		this.name = name;
-		this.phoneNumber = phoneNumber;
-		this.status = status;
-
 		classes = new ArrayList<ScheduledClass>();
 	}
+	
+	public Student(String name, String phoneNumber, Status status) {
+		this(name, new ArrayList<ScheduledClass>());
+		this.phoneNumber = phoneNumber;
+		this.status = status;
+	}
 
+	public Student(String name, List<ScheduledClass> classes) {
+		super();
+		//this.id = nextId++;
+		this.name = name;
+		this.classes = classes;
+	}
+	
 	public int getId() {
 		return id;
 	}
@@ -73,6 +89,15 @@ public class Student implements Serializable {
 		this.name = name;
 	}
 	
+	/*
+	public boolean isFullTime() {
+		return fullTime;
+	}
+
+	public void setFullTime(boolean fullTime) {
+		this.fullTime = fullTime;
+	}
+	*/
 	
 	@JsonIgnore
 	public Status [] getStatusList() {
@@ -99,7 +124,6 @@ public class Student implements Serializable {
 	public List<ScheduledClass> getClasses() {
 		return classes;
 	}
-
 	public void setClasses(List<ScheduledClass> classes) {
 		this.classes = classes;
 	}

@@ -12,7 +12,7 @@ import javax.ws.rs.Produces;
 import ttl.larku.domain.Course;
 import ttl.larku.service.RegistrationService;
 
-@Path("/courses")
+@Path("/v1/courses")
 public class CourseController {
 	
 	@Inject

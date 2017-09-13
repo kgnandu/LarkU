@@ -7,7 +7,7 @@
 
 	<persistence-unit name="LarkUPU_SE" transaction-type="RESOURCE_LOCAL">
 
-		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 		
 		<class>ttl.larku.domain.Student</class>
 		<class>ttl.larku.domain.ScheduledClass</class>
@@ -20,27 +20,28 @@
 			<property name="javax.persistence.jdbc.password" value="larku" />
 			
 			<property name="hibernate.dialect" value="org.hibernate.dialect.DerbyDialect"/>
-         	<!-- <property name="hibernate.hbm2ddl.auto" value="create"/>	-->
-         	
+         	<!--  <property name="hibernate.hbm2ddl.auto" value="create"/>	-->
+         	<property name="hibernate.show_sql" value="true"/>	
+         	<property name="hibernate.format_sql" value="true"/>	
 		</properties>
 
 	</persistence-unit>
 
+	<persistence-unit name="LarkUPU_NON_JTA" transaction-type="RESOURCE_LOCAL">
 
-	<!--
-	<persistence-unit name="LandUse_EE" transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+		<non-jta-data-source>jdbc/LarkUDS</non-jta-data-source>	
 
-		<!- Hibernate's own Persistence bootstrapper is fine without this, but 
-			Spring's LocalContainerEntityManagerFactoryBean requires it. ->
-		<provider>org.hibernate.ejb.HibernatePersistence</provider>
-
-		<non-jta-data-source>jdbc/LandUse</non-jta-data-source>
+		<class>ttl.larku.domain.Student</class>
+		<class>ttl.larku.domain.ScheduledClass</class>
+		<class>ttl.larku.domain.Course</class>
 
 		<properties>
-			<property name="eclipselink.logging.level" value="WARNING" />
+			<property name="hibernate.dialect" value="org.hibernate.dialect.DerbyDialect"/>
+         	<!--    <property name="hibernate.hbm2ddl.auto" value="create"/>	-->
+         	<property name="hibernate.show_sql" value="true"/>	
 		</properties>
 
 	</persistence-unit>
-	-->
 
 </persistence>

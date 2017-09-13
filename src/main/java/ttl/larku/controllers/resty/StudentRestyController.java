@@ -30,7 +30,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
-@Path("/students")
+@Path("/v1/students")
 public class StudentRestyController {
 
 	
@@ -73,6 +73,7 @@ public class StudentRestyController {
 			throw new LarkUException("Student " + id + " was not home");
 		}
 		
+		/*
 		ObjectMapper mapper = new ObjectMapper();
 		//Configure mapper
 		mapper.configure(SerializationFeature.INDENT_OUTPUT, true);
@@ -82,7 +83,9 @@ public class StudentRestyController {
 		StringWriter sw = new StringWriter();
 		//Convert
 		mapper.writeValue(sw, student);
-		System.out.println("Hand mapped student is " + sw.toString());
+		//System.out.println("Hand mapped student is " + sw.toString());
+		 */
+
 		return student;
 	}
 
@@ -192,7 +195,7 @@ public class StudentRestyController {
 	@Produces({ "application/xml", "application/json"})
 	public List<Link> getStudentsXmlJsonLinks() {
 		List<String> matched = uriInfo.getMatchedURIs();
-		System.out.println("matched: " + matched);
+		//System.out.println("matched: " + matched);
 		List<Student> students = regService.getStudentService()
 				.getAllStudents();
 		List<Link> uris = new ArrayList<Link>();

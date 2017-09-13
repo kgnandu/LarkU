@@ -29,16 +29,6 @@ public class StudentToSerialConverter implements MessageBodyReader<Student>,
 	private int studentSize;
 
 	public StudentToSerialConverter() throws IOException {
-		// Get and save the size of a serialized Student
-		Student s = new Student();
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		ObjectOutputStream oos = new ObjectOutputStream(baos);
-
-		oos.writeObject(s);
-		byte[] buf = baos.toByteArray();
-
-		studentSize = buf.length;
-
 	}
 
 	@Override
@@ -81,23 +71,6 @@ public class StudentToSerialConverter implements MessageBodyReader<Student>,
 			Annotation[] annotations, MediaType mediaType) {
 		
 		return -1;
-		/*
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		ObjectOutputStream oos;
-		try {
-			oos = new ObjectOutputStream(baos);
-			oos.writeObject(t);
-			byte[] buf = baos.toByteArray();
-			return buf.length;
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			throw new WebApplicationException(Response
-					.status(Status.INTERNAL_SERVER_ERROR)
-					.entity("StudentToSerialConverter could not convert " + t
-							+ ", exception is " + e).build());
-		}
-		*/
 	}
 
 	@Override

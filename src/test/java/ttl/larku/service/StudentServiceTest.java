@@ -1,14 +1,15 @@
 package ttl.larku.service;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import ttl.larku.dao.BaseDAO;
 import ttl.larku.dao.inmemory.InMemoryStudentDAO;
 import ttl.larku.domain.Student;
-import ttl.larku.exception.LarkUException;
 
 public class StudentServiceTest {
 
@@ -21,6 +22,12 @@ public class StudentServiceTest {
 		studentService.setStudentDAO(dao);
 		studentService.createStudent("Joe");
 		studentService.createStudent("Mary");
+	}
+	
+	@After
+	public void tearDown() {
+		studentService.getStudentDAO().deleteStore();
+		studentService.getStudentDAO().createStore();
 	}
 	
 	@Test

@@ -13,7 +13,7 @@ import javax.ws.rs.core.UriInfo;
 import ttl.larku.domain.ScheduledClass;
 import ttl.larku.service.RegistrationService;
 
-@Path("")
+@Path("/v1")
 public class RegistrationController {
 
 	@Inject

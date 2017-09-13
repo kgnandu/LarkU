@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -23,15 +26,15 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
+
 import ttl.larku.domain.Student;
 import ttl.larku.rest.app.LarkURestApp;
 import ttl.larku.service.StudentService;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
-
 @RunWith(Arquillian.class)
-public class StudentControllerITTest {
+public class StudentControllerITTestCXF {
 
 	@ArquillianResource
 	private URL serviceURL;
@@ -44,18 +47,19 @@ public class StudentControllerITTest {
 				//.addClass(StudentService.class)
 				//.addClass(SomeController.class)
 				.addPackages(true, "ttl")
-				.addAsWebInfResource(
-						new File("src/main/java/META-INF/beans.xml"))
-				.addAsWebInfResource(
-						new File("src/main/webapp/WEB-INF/openejb-jar.xml"))
-				.addAsWebInfResource(
-						new File("src/main/webapp/WEB-INF/resources.xml"))
 				.addAsLibrary(new File("lib/jackson-annotations-2.5.4.jar"))
 				.addAsLibrary(new File("lib/jackson-core-2.5.4.jar"))
 				.addAsLibrary(new File("lib/jackson-databind-2.5.4.jar"))
 				.addAsLibrary(new File("lib/jackson-jaxrs-base-2.5.4.jar"))
-				.addAsLibrary(
-						new File("lib/jackson-jaxrs-json-provider-2.5.4.jar"));
+				.addAsLibrary(new File("lib/jackson-jaxrs-json-provider-2.5.4.jar"))
+				.addAsWebInfResource(
+						new File("src/main/java/META-INF/beans.xml"))
+				.addAsWebInfResource(
+						new File("src/main/java/META-INF/persistence.xml"))
+				.addAsWebInfResource(
+						new File("src/main/webapp/WEB-INF/openejb-jar.xml"))
+				.addAsWebInfResource(
+						new File("src/main/webapp/WEB-INF/resources.xml"));
 
 		System.out.println("createDeployment: " + jar.toString(true));
 		return jar;
@@ -69,9 +73,9 @@ public class StudentControllerITTest {
 			System.out.println("testgetStudentRawGoodId: " + "serviceURL is " + serviceURL);
 			System.out.println("testgetStudentRawGoodId: " + "sURL is " + sURL);
 			int idToTest = 1;
-			WebClient webClient = WebClient.create(sURL);
+			WebClient webClient = WebClient.create(sURL).path("/registration/v1/students");
 			webClient.accept(MediaType.APPLICATION_JSON);
-			Response response = webClient.path("/registration/v1/students/{id}", idToTest).get();
+			Response response = webClient.path("{id}", idToTest).get();
 			System.out.println("testgetStudentRawGoodId: " + "Response is " + response);
 
 			assertEquals(200, response.getStatus());
@@ -95,7 +99,7 @@ public class StudentControllerITTest {
             ObjectMapper mapper = new ObjectMapper();
     		Student student = mapper.readValue(jsonString, Student.class);
     		System.out.println("testgetStudentRawGoodId: " + "student is " + student);
-			assertEquals("Roberta", student.getName());
+			assertEquals("Manoj", student.getName());
 
 		} catch (Throwable e) {
 			e.printStackTrace();
@@ -140,7 +144,7 @@ public class StudentControllerITTest {
 			Student student = webClient.path("registration/v1/students/{id}", idToTest).get(
 					Student.class);
 			System.out.println("testGetStudentRawLowId: " + "student is " + student);
-			assertEquals("Roberta", student.getName());
+			assertEquals("Manoj", student.getName());
 		} catch (Throwable e) {
 			e.printStackTrace();
 			throw e;
@@ -171,21 +175,19 @@ public class StudentControllerITTest {
 		}
 	}
 	
-	/*
-	//@Test
+	@Test
 	public void testWithJaxRS2_0() {
 
-		String port = 	System.getProperty("http.port");
-		port = "8080";
-		String sURL = "http://localhost:" + port + "/arqtest/arqdemo/students";
+		String port = System.getProperty("http.port");
+		String sURL = serviceURL.toString() + "/registration/v1/students/{id}";
 		System.out.println("sURL is " + sURL);
-        ClientConfig clientConfig = new ClientConfig();
-        clientConfig.register(JacksonJsonProvider.class);
 
-        Client client = ClientBuilder.newClient(clientConfig);
+		ClientBuilder builder = ClientBuilder.newBuilder();
+        builder.register(JacksonJsonProvider.class);
+        
+        Client client = builder.build();
 
-        WebTarget root = client.target(sURL);
-        WebTarget studentResource = root.path("{id}");
+        WebTarget studentResource = client.target(sURL);
         
         int idToTest = 1;
         WebTarget wt = studentResource.resolveTemplate("id", idToTest);
@@ -200,5 +202,5 @@ public class StudentControllerITTest {
         
         System.out.println("student is " + c);
 	}
-	*/
 }
+

@@ -24,7 +24,7 @@ public class Customer {
 	
 	//public List<ScheduledClass2> classes = new ArrayList<>();
 	//@JsonManagedReference
-	public List<ScheduledClass> classes = new ArrayList<ScheduledClass>();
+	public List<ScheduledClass2> classes = new ArrayList<ScheduledClass2>();
 	
 	
 	public Customer() {} 

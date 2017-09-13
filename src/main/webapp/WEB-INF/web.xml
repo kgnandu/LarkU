@@ -7,7 +7,7 @@
 	<!-- Needed for CDI in Tomcat 8 
 	<listener> <listener-class>org.jboss.weld.environment.servlet.Listener</listener-class> 
 		</listener>  -->
-	<!-- Uncomment this section to add security for specific url-patterns
+	<!-- Uncomment this section to add security for specific url-patterns 
 	<security-role>
 		<role-name>admin</role-name>
 	</security-role>
@@ -17,8 +17,8 @@
 	<security-constraint>
 		<web-resource-collection>
 			<web-resource-name>MyProtectedResource</web-resource-name>
-			<url-pattern>/registration/admin/*</url-pattern>
-			<url-pattern>/registration/webapp/admin/*</url-pattern>
+			<url-pattern>/registration/v1/admin/*</url-pattern>
+			<url-pattern>/registration/v1/webapp/admin/*</url-pattern>
 		</web-resource-collection>
 		<auth-constraint>
 			<role-name>admin</role-name>
@@ -29,7 +29,7 @@
 	<!--  UnComment This for SSL.  You MUST have done whatever configuration
 			your Server Requires for SSL already.  Currently setup to require
 			SSL for everything.  You can change this by changing the URL pattern
-			
+			-->
 	<security-constraint>
 		<web-resource-collection>
 			<web-resource-name>SSL</web-resource-name>
@@ -39,7 +39,6 @@
 			<transport-guarantee>CONFIDENTIAL</transport-guarantee>
 		</user-data-constraint>
 	</security-constraint>
-	-->
 
 	<!-- Needed for CDI in Tomcat 8 (maybe) <resource-env-ref> <resource-env-ref-name>BeanManager</resource-env-ref-name> 
 		<resource-env-ref-type> javax.enterprise.inject.spi.BeanManager </resource-env-ref-type> 

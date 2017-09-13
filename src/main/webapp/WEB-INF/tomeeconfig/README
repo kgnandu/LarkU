@@ -1,4 +1,11 @@
+SSL for tomcat
 To create a keystore:
 	keytool -genkey -alias tomcat -keypass tomcatpassword -keystore .keystore -keyalg RSA	
-	
-Set first name and last name to "localhost".  Wierd, but apparently necessary.
+
+	Set first name and last name to "localhost".  Wierd, but apparently necessary.
+
+
+
+Change server.xml to start up connector at 8443
+
+For client, see RestFulClient.LarkURealSSLClient

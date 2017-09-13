@@ -7,6 +7,10 @@
                       http://jboss.org/schema/weld/beans
                       http://jboss.org/schema/weld/beans_1_1.xsd"
 >
-
-
+<!--
+   <interceptors>
+      <class>ttl.larku.cdi.interceptors.LogInterceptor</class>
+      <class>ttl.larku.cdi.interceptors.PerfInterceptor</class>
+   </interceptors>
+-->
 </beans>

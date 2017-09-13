@@ -60,9 +60,13 @@
 			BIO implementation that requires the JSSE style configuration. When using 
 			the APR/native implementation, the OpenSSL style configuration is required 
 			as described in the APR/native documentation -->
+			<!-- //AP 
+				This worked in tomcat 7. protocol="org.apache.coyote.http11.Http11Protocol
+				Check documentation for other protocol choices
+			-->
 		<Connector SSLEnabled="true" clientAuth="false"
 			keystoreFile="/home/tomcat7/.keystore" keystorePass="tomcatpassword"
-			maxThreads="150" port="8443" protocol="org.apache.coyote.http11.Http11Protocol"
+			maxThreads="150" port="8443" protocol="org.apache.coyote.http11.Http11Nio2Protocol"
 			scheme="https" secure="true" server="Apache TomEE" sslProtocol="TLS"
 			xpoweredBy="false" />
 		<!-- <Connector SSLEnabled="true" clientAuth="false" keystoreFile="/home/tomcat7//.keystore" 

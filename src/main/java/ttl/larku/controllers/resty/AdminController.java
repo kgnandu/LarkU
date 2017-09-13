@@ -13,14 +13,16 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
 
+import ttl.larku.cdi.interceptors.Logged;
 import ttl.larku.domain.ScheduledClass;
 import ttl.larku.domain.Student;
 import ttl.larku.service.RegistrationService;
 
-@Path("/admin")
+@Path("/v1/admin")
 public class AdminController {
 	
 	
@@ -48,7 +50,7 @@ public class AdminController {
 	public Response updateStudent(Student student) {
 		regService.getStudentService().updateStudent(student);
 		
-		return Response.ok().build();
+		return Response.status(Status.ACCEPTED).header("Location", "xyz.com").build();
 
 	}
 	/**
@@ -127,8 +129,8 @@ public class AdminController {
 
 	@POST
 	@Path(value="/class/{classId}/student/{studentId}")
-	public Student registerStudentPathParam(@PathParam("studentId") int studentId, 
-			@PathParam("classId") int classId) {
+	public Student registerStudentPathParam(@PathParam("classId") int classId, 
+			@PathParam("studentId") int studentId) {
 		
 		ScheduledClass sClass = regService.getClassService().getScheduledClass(classId);
 		regService.registerStudentForClass(studentId, sClass.getCourse().getCode(), sClass.getStartDate());

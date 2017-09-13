@@ -10,26 +10,59 @@
 
 	<packaging>war</packaging>
 
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.jboss.shrinkwrap.resolver</groupId>
+				<artifactId>shrinkwrap-resolver-bom</artifactId>
+				<version>2.2.2</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+			<dependency>
+				<groupId>org.jboss.arquillian</groupId>
+				<artifactId>arquillian-bom</artifactId>
+				<version>1.1.11.Final</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
 	<dependencies>
 		<dependency>
-			<groupId>org.apache.openejb</groupId>
-			<artifactId>javaee-api</artifactId>
+			<groupId>org.apache.tomee</groupId>
+			<artifactId>openejb-jee</artifactId>
 			<version>${openejb.javaee.api}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.apache.openejb</groupId>
+			<groupId>org.apache.tomee</groupId>
 			<artifactId>arquillian-tomee-embedded</artifactId>
 			<version>${tomee.version}</version>
 			<scope>test</scope>
 		</dependency>
 
+		<!-- Required only when you are using JAX-RS Client <dependency> <groupId>org.glassfish.jersey.core</groupId> 
+			<artifactId>jersey-client</artifactId> <version>2.19</version> </dependency> -->
+
 		<!-- For TomEE CXF -->
 		<dependency>
-			<groupId>org.apache.openejb</groupId>
+			<groupId>org.apache.tomee</groupId>
 			<artifactId>tomee-jaxrs</artifactId>
 			<version>${tomee.version}</version>
 			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.shrinkwrap.resolver</groupId>
+			<artifactId>shrinkwrap-resolver-impl-maven</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.arquillian.junit</groupId>
+			<artifactId>arquillian-junit-container</artifactId>
+			<version>1.1.11.Final</version>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
@@ -98,6 +131,20 @@
 			<version>1.2</version>
 			<scope>provided</scope>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>5.2.8.Final</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.derby/derbyclient -->
+		<dependency>
+			<groupId>org.apache.derby</groupId>
+			<artifactId>derbyclient</artifactId>
+			<version>10.13.1.1</version>
+		</dependency>
+
+
 	</dependencies>
 
 	<build>
@@ -112,21 +159,15 @@
 				</configuration>
 			</plugin>
 		</plugins>
-		<!--
-		<resources>
-			<resource>
-				<directory>src/main/java/ttl/larku/converters</directory>
-				<excludes>
-					<exclude>JspForwardingConverter.java</exclude>
-				</excludes>
-			</resource>
-		</resources>
-		-->
+		<!-- <resources> <resource> <directory>src/main/java/ttl/larku/converters</directory> 
+			<excludes> <exclude>JspForwardingConverter.java</exclude> </excludes> </resource> 
+			</resources> -->
 	</build>
 
 	<properties>
-		<tomee.version>1.7.2</tomee.version>
-		<openejb.javaee.api>6.0-6</openejb.javaee.api>
+		<!-- <tomee.version>1.7.2</tomee.version> <openejb.javaee.api>6.0-6</openejb.javaee.api> -->
+		<tomee.version>7.0.2</tomee.version>
+		<openejb.javaee.api>7.0.2</openejb.javaee.api>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<failOnMissingWebXml>false</failOnMissingWebXml>
 		<maven.compiler.target>1.8</maven.compiler.target>

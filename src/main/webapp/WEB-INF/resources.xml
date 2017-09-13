@@ -11,4 +11,6 @@
     </Service>
     -->
     <Service id="jsonProvider" class-name="com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider"/>
+
+ 
 </resources>

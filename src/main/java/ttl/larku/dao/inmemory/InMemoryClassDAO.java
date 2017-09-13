@@ -5,23 +5,27 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 
-import ttl.larku.cdi.qualifier.DBQualifier;
-import ttl.larku.cdi.qualifier.DBType;
 import ttl.larku.dao.BaseDAO;
+import ttl.larku.domain.Course;
 import ttl.larku.domain.ScheduledClass;
+import ttl.larku.domain.Student;
 
-@DBQualifier(DBType.CLASS)
+//@DBQualifier(DBType.CLASS)
 @ApplicationScoped
 public class InMemoryClassDAO implements BaseDAO<ScheduledClass> {
 
 	private Map<Integer, ScheduledClass> classes = new HashMap<Integer, ScheduledClass>();
 	private static int nextId = 0;
 	
+
 	public InMemoryClassDAO() {
 		int i = 10;
 	}
+	
 	
 	@Override
 	public void update(ScheduledClass updateObject) {

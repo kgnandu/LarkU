@@ -68,6 +68,7 @@
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-core</artifactId>
 			<version>2.0.5-beta</version>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.powermock</groupId>
@@ -95,6 +96,7 @@
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
 			<version>1.2</version>
+			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 
@@ -110,6 +112,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<!--
 		<resources>
 			<resource>
 				<directory>src/main/java/ttl/larku/converters</directory>
@@ -118,6 +121,7 @@
 				</excludes>
 			</resource>
 		</resources>
+		-->
 	</build>
 
 	<properties>

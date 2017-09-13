@@ -1,8 +1,16 @@
 package ttl.larku.domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -12,18 +20,23 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class ScheduledClass {
+@Entity
+public class ScheduledClass implements Serializable {
 	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	
 	@XmlTransient
 	@JsonIgnore
+	@ManyToMany(fetch=FetchType.EAGER, mappedBy = "classes")
 	private List<Student> students = new ArrayList<Student>();
 	
 	private String startDate;
 	private String endDate;
 	
 	
+	@ManyToOne
 	private Course course;
 	
 	private static int nextId = 0;
@@ -49,11 +62,13 @@ public class ScheduledClass {
 		this.id = id;
 	}
 	
+	//@JsonIgnore
 	//@Transient
 	public List<Student> getStudents() {
 		return students;
 	}
 	
+	//@JsonIgnore
 	//@Transient
 	public void setStudents(List<Student> students) {
 		this.students = students;
@@ -130,6 +145,13 @@ public class ScheduledClass {
 		} else if (!startDate.equals(other.startDate))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "ScheduledClass [id=" + id 
+				+ ", startDate=" + startDate + ", endDate=" + endDate
+				+ ", course=" + course + ", student Count = " + students.size() + "]";
 	}
 
 }

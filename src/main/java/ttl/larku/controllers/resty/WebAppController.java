@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,18 +22,39 @@ import ttl.larku.domain.ScheduledClass;
 import ttl.larku.domain.Student;
 import ttl.larku.service.RegistrationService;
 
-@Path("/webapp")
+/**
+ * A controller to make a Web APPLICATION using JAX-RS.
+ * This works by producing "text/html", which redirects
+ * to the ttl.larku.converters.JspForwardingConverter,
+ * which in turn forwards to a jsp.  WARNING - the
+ * converter uses a CXF specific technique to do
+ * the forwarding - may need to change if you use some
+ * other library.
+ * 
+ * With Jersey and plain old Tomcat, the doForward() technique
+ * seems to work, though Jersey does have a View class that should 
+ * be further explored.
+ * 
+ * @author whynot
+ *
+ */
+@Path("/v1/webapp")
 public class WebAppController {
 
 	@Inject
 	private RegistrationService regService;
 
 	//@Context private MessageContext context;
+	
+	//We need this to fool CXF into calling our jspForwardingConverter
+	//If we send back a String, then it doesn't seem to get called 
+	//in tomee 7.0.1
+	private final static SillyDummy sillyDummy = new SillyDummy();
 
 	@GET
 	@Path("/getStudents")
 	@Produces("text/html")
-	public Object getStudents(@Context HttpServletRequest request,
+	public List<Student> getStudents(@Context HttpServletRequest request,
 			@Context HttpServletResponse response) throws ServletException,
 			IOException {
 		List<Student> students = regService.getStudentService()
@@ -40,36 +62,40 @@ public class WebAppController {
 		request.setAttribute("students", students);
 		request.setAttribute("url", "/WEB-INF/jsp/showStudents.jsp");
 		//jspForwardCXF(request,  response, "/WEB-INF/jsp/showStudents.jsp");
+		//doForward(request, response);
 		return students;
 	}
 
 	@GET
 	@Path("/getStudent")
 	@Produces("text/html")
-	public Object getStudents(@QueryParam("id") int id,
+	public Student getStudent(@QueryParam("id") int id,
 			@Context HttpServletRequest request,
 			@Context HttpServletResponse response) throws ServletException,
 			IOException {
 		Student student = regService.getStudentService().getStudent(id);
 		request.setAttribute("student", student);
 		request.setAttribute("url", "/WEB-INF/jsp/showStudent.jsp");
+		//doForward(request,response);
 		return student;
 	}
 
 	@GET
 	@Path("/admin/addStudent")
 	@Produces("text/html")
-	public Object addStudentForm(@Context HttpServletRequest request,
+	public SillyDummy addStudentForm(@Context HttpServletRequest request,
 			@Context HttpServletResponse response) throws ServletException,
 			IOException {
 		request.setAttribute("url", "/WEB-INF/jsp/addStudent.jsp");
-		return "";
+		//doForward(request,response);
+		//return "";
+		return sillyDummy;
 	}
 
 	@POST
 	@Path("/admin/addStudent")
 	@Produces("text/html")
-	public Object addStudent(MultivaluedMap<String, String> formParams,
+	public Student addStudent(MultivaluedMap<String, String> formParams,
 			@Context HttpServletRequest request,
 			@Context HttpServletResponse response) throws ServletException,
 			IOException {
@@ -85,38 +111,42 @@ public class WebAppController {
 
 		request.setAttribute("student", student);
 		request.setAttribute("url", "/WEB-INF/jsp/showStudent.jsp");
+		//doForward(request,response);
 		return student;
 	}
 
 	@GET
 	@Path("/getAllClasses")
 	@Produces("text/html")
-	public Object getClasses(@Context HttpServletRequest request,
+	public List<ScheduledClass> getClasses(@Context HttpServletRequest request,
 			@Context HttpServletResponse response) throws ServletException,
 			IOException {
 		List<ScheduledClass> classes = regService.getClassService()
 				.getAllScheduledClasses();
 		request.setAttribute("classes", classes);
 		request.setAttribute("url", "/WEB-INF/jsp/showClasses.jsp");
+		//doForward(request,response);
 		return classes;
 	}
 
 	@GET
 	@Path("/admin/addClass")
 	@Produces("text/html")
-	public Object addClassForm(@Context HttpServletRequest request,
+	public SillyDummy addClassForm(@Context HttpServletRequest request,
 			@Context HttpServletResponse response) throws ServletException,
 			IOException {
 		List<Course> courses = regService.getCourseService().getAllCourses();
 		request.setAttribute("courses", courses);
 		request.setAttribute("url", "/WEB-INF/jsp/addClass.jsp");
-		return "";
+		//doForward(request,response);
+		//return "";
+		return sillyDummy;
 	}
 
 	@POST
 	@Path("/admin/addClass")
 	@Produces("text/html")
-	public Object addClass(@FormParam("courseCode") String courseCode,
+	public SillyDummy addClass(@FormParam("courseCode") String courseCode,
 			@FormParam("startDate") String startDate,
 			@FormParam("endDate") String endDate,
 			@Context HttpServletRequest request,
@@ -125,13 +155,15 @@ public class WebAppController {
 		ScheduledClass sc = regService.addNewClassToSchedule(courseCode,
 				startDate, endDate);
 		request.setAttribute("url", "/index.jsp");
-		return "";
+		//doForward(request, response);
+		//return "";
+		return sillyDummy;
 	}
 
 	@GET
 	@Path("/admin/registerStudentForClass")
 	@Produces("text/html")
-	public Object registerStudentForm(@Context HttpServletRequest request,
+	public SillyDummy registerStudentForm(@Context HttpServletRequest request,
 			@Context HttpServletResponse response) throws ServletException,
 			IOException {
 		List<ScheduledClass> classes = regService.getClassService()
@@ -142,13 +174,15 @@ public class WebAppController {
 		request.setAttribute("students", students);
 
 		request.setAttribute("url", "/WEB-INF/jsp/addRegistration.jsp");
-		return "";
+		//doForward(request, response);
+		//return "";
+		return sillyDummy;
 	}
 
 	@POST
 	@Path("/admin/registerStudentForClass")
 	@Produces("text/html")
-	public Object registerStudent(@FormParam("studentId") int studentId,
+	public SillyDummy registerStudent(@FormParam("studentId") int studentId,
 			@FormParam("classId") int classId,
 			@Context HttpServletRequest request,
 			@Context HttpServletResponse response) throws ServletException,
@@ -163,13 +197,15 @@ public class WebAppController {
 
 		request.setAttribute("student", student);
 		request.setAttribute("url", "/WEB-INF/jsp/showStudent.jsp");
-		return "";
+		//doForward(request, response);
+		//return "";
+		return sillyDummy;
 	}
 
 	@GET
 	@Path("/masterDetailRest")
 	@Produces("text/html")
-	public Object masterDetailForm(@Context HttpServletRequest request,
+	public SillyDummy masterDetailForm(@Context HttpServletRequest request,
 			@Context HttpServletResponse response) throws ServletException,
 			IOException {
 		List<Student> students = regService.getStudentService()
@@ -177,20 +213,32 @@ public class WebAppController {
 		request.setAttribute("students", students);
 		request.setAttribute("url", "/WEB-INF/jsp/studentMasterDetailJQuery.jsp");
 		//This will be handled by the JspForwardingConverter - is *very* cxf jaxrs specific
-		return "";
+		//doForward(request, response);
+		//return "";
+		return sillyDummy;
 	}
 
 	@GET
 	@Path("/admin/addStudentRest")
 	@Produces("text/html")
-	public Object addRestfullyForm(@Context HttpServletRequest request,
+	public SillyDummy addRestfullyForm(@Context HttpServletRequest request,
 			@Context HttpServletResponse response) throws ServletException,
 			IOException {
 		List<Student> students = regService.getStudentService()
 				.getAllStudents();
 		request.setAttribute("students", students);
 		request.setAttribute("url", "/WEB-INF/jsp/showStudentsJQueryAjax.jsp");
-		return "";
+		//doForward(request, response);
+		//return "";
+		return sillyDummy;
 	}
 
+	public void doForward(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
+		String url = (String)request.getAttribute("url");
+		RequestDispatcher rd = request.getRequestDispatcher(url);
+		rd.forward(request, response);
+	}
 }
+
+class SillyDummy {}
