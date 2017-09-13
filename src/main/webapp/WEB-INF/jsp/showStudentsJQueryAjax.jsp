@@ -51,7 +51,8 @@
 			}
 
 			$.ajax({
-				url : "http://localhost:8080/LarkU/registration/v1/admin/students",
+				//url : "http://localhost:8080/LarkU/registration/v1/admin/students",
+				url : "/LarkU/registration/v1/admin/students",
 				//url : "https://localhost:8443/LarkU/registration/admin/students",
 				type : "post",
 				dataType : "json",
@@ -90,7 +91,8 @@
 
 	$(document).ready(function() {
 		//Fetch the set of current students and populate the list
-		var href = "http://localhost:8080/LarkU/registration/v1/students";
+		//var href = "http://localhost:8080/LarkU/registration/v1/students";
+		var href = "/LarkU/registration/v1/students";
 		//var href = "https://localhost:8443/LarkU/registration/students";
 		$.get(href, function(values) {
 			var students = values;

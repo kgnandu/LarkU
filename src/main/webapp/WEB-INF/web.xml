@@ -29,7 +29,6 @@
 	<!--  UnComment This for SSL.  You MUST have done whatever configuration
 			your Server Requires for SSL already.  Currently setup to require
 			SSL for everything.  You can change this by changing the URL pattern
-			-->
 	<security-constraint>
 		<web-resource-collection>
 			<web-resource-name>SSL</web-resource-name>
@@ -39,6 +38,7 @@
 			<transport-guarantee>CONFIDENTIAL</transport-guarantee>
 		</user-data-constraint>
 	</security-constraint>
+			-->
 
 	<!-- Needed for CDI in Tomcat 8 (maybe) <resource-env-ref> <resource-env-ref-name>BeanManager</resource-env-ref-name> 
 		<resource-env-ref-type> javax.enterprise.inject.spi.BeanManager </resource-env-ref-type> 
